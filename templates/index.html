@@ -1,0 +1,220 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Coffee App Portfolio Return Form</title>
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" rel="stylesheet">
+    <style>
+        body {
+            padding-top: 30px;
+            background: url('https://www.transparenttextures.com/patterns/cubes.png'), #f5e9e2;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            color: #4e342e;
+        }
+        .container {
+            max-width: 800px;
+            background-color: #ffffff;
+            padding: 30px;
+            border-radius: 15px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            border: 2px solid #d7ccc8;
+        }
+        h2 {
+            margin-bottom: 20px;
+            color: #3e2723;
+            font-family: 'Cursive', sans-serif;
+        }
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+        .form-control {
+            border-radius: 0.5rem;
+            border: 1px solid #a1887f;
+            background-color: #f1e4dc;
+        }
+        .form-check-label {
+            margin-left: 10px;
+            color: #4e342e;
+        }
+        .btn-primary {
+            background-color: #795548;
+            border: none;
+            border-radius: 25px;
+            padding: 10px 20px;
+            font-size: 16px;
+            transition: background-color 0.3s;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
+        }
+        .btn-primary:hover {
+            background-color: #5d4037;
+        }
+        #results h3 {
+            font-size: 1.5rem;
+            color: #3e2723;
+        }
+        #results .mt-4 {
+            margin-top: 2rem;
+        }
+        .chart-container {
+            position: relative;
+            height: 300px;
+            width: 100%;
+        }
+        .form-check-input:checked {
+            background-color: #6d4c41;
+            border-color: #5d4037;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h2 class="text-center">Predict your Return for the AashPri Portfolio</h2>
+        <form id="portfolioForm">
+            <!-- Age Range -->
+            <div class="form-group">
+                <label for="ageRange">Age Range</label>
+                <select class="form-control" id="ageRange" name="ageRange">
+                    <option value="18-24">18-24</option>
+                    <option value="25-34">25-34</option>
+                    <option value="35-44">35-44</option>
+                    <option value="45-54">45-54</option>
+                    <option value="55-64">55-64</option>
+                    <option value="65+">65+</option>
+                </select>
+            </div>
+
+            <!-- Gender -->
+            <div class="form-group">
+                <label>Gender</label>
+                <div class="form-check">
+                    <input class="form-check-input" type="radio" id="male" name="gender" value="Male">
+                    <label class="form-check-label" for="male">Male</label>
+                </div>
+                <div class="form-check">
+                    <input class="form-check-input" type="radio" id="female" name="gender" value="Female">
+                    <label class="form-check-label" for="female">Female</label>
+                </div>
+            </div>
+
+            <!-- Drinks Coffee -->
+            <div class="form-group">
+                <label>Drinks Coffee</label>
+                <div class="form-check">
+                    <input class="form-check-input" type="radio" id="drinksCoffeeYes" name="drinksCoffee" value="true">
+                    <label class="form-check-label" for="drinksCoffeeYes">Yes</label>
+                </div>
+                <div class="form-check">
+                    <input class="form-check-input" type="radio" id="drinksCoffeeNo" name="drinksCoffee" value="false">
+                    <label class="form-check-label" for="drinksCoffeeNo">No</label>
+                </div>
+            </div>
+
+            <!-- Daily Cups -->
+            <div class="form-group">
+                <label for="dailyCups">Daily Cups</label>
+                <input type="number" class="form-control" id="dailyCups" name="dailyCups" placeholder="Enter number of cups">
+            </div>
+
+            <!-- Libido Effect -->
+            <div class="form-group">
+                <label for="libidoEffect">Libido Effect</label>
+                <select class="form-control" id="libidoEffect" name="libidoEffect">
+                    <option value="no effect">No Effect</option>
+                    <option value="positive">Positive</option>
+                    <option value="negative">Negative</option>
+                </select>
+            </div>
+
+            <!-- Uses Reusable Cups -->
+            <div class="form-group">
+                <label for="reusableCups">Uses Reusable Cups</label>
+                <select class="form-control" id="reusableCups" name="reusableCups">
+                    <option value="always">Always</option>
+                    <option value="never">Never</option>
+                    <option value="sometimes">Sometimes</option>
+                </select>
+            </div>
+
+            <!-- Importance of Morning Coffee -->
+            <div class="form-group">
+                <label for="importanceMorning">Importance of Morning Coffee</label>
+                <select class="form-control" id="importanceMorning" name="importanceMorning">
+                    <option value="Extremely">Extremely</option>
+                    <option value="Very">Very</option>
+                    <option value="Somewhat">Somewhat</option>
+                    <option value="Not at all">Not at all</option>
+                </select>
+            </div>
+
+            <!-- Submit Button -->
+            <button type="button" class="btn btn-primary" onclick="submitForm()">Submit</button>
+        </form>
+
+        <!-- Results Section -->
+        <div id="results" class="mt-5">
+            <h3>Your Return of Investment for our portfolio for the next year is: <span id="roiValue">___</span></h3>
+            <div id="barChart" class="mt-4">
+                <canvas id="returnsBarChart"></canvas>
+            </div>
+        </div>
+    </div>
+
+    <!-- Bootstrap and Chart.js JS -->
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+    <script>
+        async function submitForm() {
+            const form = document.getElementById('portfolioForm');
+            const formData = new FormData(form);
+            const data = {};
+            formData.forEach((value, key) => {
+                data[key] = value;
+            });
+
+            const response = await fetch('/calculate', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(data)
+            });
+            const result = await response.json();
+
+            if (result.error) {
+                alert(result.error);
+            } else {
+                // Display ROI value
+                document.getElementById('roiValue').textContent = result.roi.toFixed(2);
+
+                // Display Bar Chart
+                const ctx = document.getElementById('returnsBarChart').getContext('2d');
+                const roiBreakdown = result.roi_breakdown;
+                new Chart(ctx, {
+                    type: 'bar',
+                    data: {
+                        labels: Object.keys(roiBreakdown),
+                        datasets: [{
+                            label: 'Return of Investment ($)',
+                            data: Object.values(roiBreakdown),
+                            backgroundColor: ['#6F4E37', '#8B5A2B', '#A0522D', '#D2691E']
+                        }]
+                    },
+                    options: {
+                        responsive: true,
+                        scales: {
+                            y: {
+                                beginAtZero: true
+                            }
+                        }
+                    }
+                });
+            }
+        }
+    </script>
+</body>
+</html>
